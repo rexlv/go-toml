@@ -804,3 +804,27 @@ func TestMarshalArrayOnePerLine(t *testing.T) {
 		t.Errorf("Bad arrays marshal: expected\n-----\n%s\n-----\ngot\n-----\n%s\n-----\n", expected, b)
 	}
 }
+
+func TestMarshalConvertibleTypeMismatch(t *testing.T) {
+	type Postgres struct {
+		Id int64
+	}
+	type Config struct {
+		Postgres Postgres
+	}
+
+	doc := []byte(`
+		[Postgres]
+		Id = 1e3`)
+
+	config := Config{}
+	err := Unmarshal(doc, &config)
+
+	if err != nil {
+		t.Fatalf("error not nil: %s", err)
+	}
+
+	if config.Postgres.Id != 1000 {
+		t.Errorf("bad type conversion: %d", config.Postgres.Id)
+	}
+}
