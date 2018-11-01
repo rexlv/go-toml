@@ -236,7 +236,7 @@ func (t *Tree) writeTo(w io.Writer, indent, keyspace string, bytesCount int64, a
 					return bytesCount, errc
 				}
 			}
-			writtenBytesCount, err := writeStrings(w, "\n", indent, commented, "[", combinedKey, "]\n")
+			writtenBytesCount, err := writeStrings(w, indent, commented, "[", combinedKey, "]\n")
 			bytesCount += int64(writtenBytesCount)
 			if err != nil {
 				return bytesCount, err
@@ -247,7 +247,7 @@ func (t *Tree) writeTo(w io.Writer, indent, keyspace string, bytesCount int64, a
 			}
 		case []*Tree:
 			for _, subTree := range node {
-				writtenBytesCount, err := writeStrings(w, "\n", indent, commented, "[[", combinedKey, "]]\n")
+				writtenBytesCount, err := writeStrings(w, indent, commented, "[[", combinedKey, "]]\n")
 				bytesCount += int64(writtenBytesCount)
 				if err != nil {
 					return bytesCount, err
